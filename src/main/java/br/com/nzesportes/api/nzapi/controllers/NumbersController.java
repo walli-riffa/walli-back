@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/numbers")
 @CrossOrigin("${nz.allowed.origin}")
 public class NumbersController {
     @Autowired

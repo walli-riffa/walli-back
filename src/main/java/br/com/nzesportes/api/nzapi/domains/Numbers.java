@@ -13,7 +13,7 @@ public class Numbers {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String name;
+    private int number;
     private boolean active;
     @ManyToOne
     @JoinColumn(name = "customers_id")
