@@ -39,9 +39,9 @@ public class NumbersController {
     ResponseEntity<Numbers> buyNumber(@PathVariable UUID idNumber, @PathVariable UUID idCustomer) {
         return ResponseEntity.ok(service.buyNumber(idNumber, idCustomer));
     }
-    @PutMapping("/remove/{idNumber}/customer/{idCustomer}")
+    @PutMapping("/remove/{idNumber}")
     @PreAuthorize("hasRole('ADMIN')")
-    ResponseEntity<Numbers> removeCustomer(@PathVariable UUID idNumber, @PathVariable UUID idCustomer) {
+    ResponseEntity<Numbers> removeCustomer(@PathVariable UUID idNumber) {
         return ResponseEntity.ok(service.removeCustomer(idNumber));
     }
 }
