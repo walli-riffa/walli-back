@@ -19,6 +19,8 @@ public class NumbersService {
     @Autowired
     private NumbersRepository repository;
 
+    @Autowired
+    private CustomerService customerService;
 
     public Numbers getById(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
@@ -26,5 +28,22 @@ public class NumbersService {
 
     public List<Numbers> getAll() {
         return repository.findAll();
+    }
+
+    public List<Numbers> getAllByCustomer(UUID id) {
+        return repository.findAllByCustomer_Id(id);
+    }
+
+    public Numbers buyNumber(UUID idNumber, UUID idCustomer) {
+        Numbers n = repository.findById(idNumber).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
+        Customer c = customerService.getById(idCustomer);
+        n.setCustomer(c);
+        return repository.save(n);
+    }
+
+    public Numbers removeCustomer(UUID idNumber) {
+        Numbers n = repository.findById(idNumber).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
+        n.setCustomer(null);
+        return repository.save(n);
     }
 }

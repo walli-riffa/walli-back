@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,9 +22,26 @@ public class CustomersController {
     private CustomerService service;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<Customer> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
+    @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<Customer> save(@RequestBody Customer customer) {
+        return ResponseEntity.ok(service.save(customer));
+    }
 
+    @PutMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<Customer> update(@RequestBody Customer customer) {
+        return ResponseEntity.ok(service.update(customer));
+    }
+
+    @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    ResponseEntity<List<Customer>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
 }

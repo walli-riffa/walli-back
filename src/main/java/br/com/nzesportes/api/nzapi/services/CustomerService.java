@@ -1,7 +1,6 @@
 package br.com.nzesportes.api.nzapi.services;
 
 
-
 import br.com.nzesportes.api.nzapi.domains.Customer;
 import br.com.nzesportes.api.nzapi.domains.User;
 import br.com.nzesportes.api.nzapi.dtos.CustomerUpdateTO;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
@@ -28,5 +28,19 @@ public class CustomerService {
 
     public Customer getById(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
+    }
+
+    public Customer save(Customer customer) {
+        if (repository.existsByEmail(customer.getEmail()))
+            throw new ResourceConflictException(ResponseErrorEnum.AUTH001);
+        return repository.save(customer);
+    }
+
+    public Customer update(Customer customer) {
+        return repository.save(customer);
+    }
+
+    public List<Customer> getAll() {
+        return repository.findAll();
     }
 }
