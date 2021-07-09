@@ -37,6 +37,7 @@ public class NumbersService {
     public Numbers buyNumber(UUID idNumber, UUID idCustomer) {
         Numbers n = repository.findById(idNumber).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
         Customer c = customerService.getById(idCustomer);
+        n.setActive(false);
         n.setCustomer(c);
         return repository.save(n);
     }
@@ -44,6 +45,7 @@ public class NumbersService {
     public Numbers removeCustomer(UUID idNumber) {
         Numbers n = repository.findById(idNumber).orElseThrow(() -> new ResourceNotFoundException(ResponseErrorEnum.PRO001));
         n.setCustomer(null);
+        n.setActive(true);
         return repository.save(n);
     }
 }
